@@ -4,6 +4,7 @@ package main
 
 import (
     "boolshit.net/kern"
+    "boolshit.net/kern/login"
     "boolshit.net/kern/view"
 )
 
@@ -13,6 +14,9 @@ func main() {
 
     // extend globals (available to all view-templates)
     view.Globals["AppName"] = "kern.go demo app"
+
+    // block all requests which are not authenticated against "view" permission
+    app.Router.Get("/", login.PermissionReqired( "view" ) )
 
     // mount index.gohtml on "/"
     app.Router.Get("/", view.NewHandler( "index.gohtml" ) )
