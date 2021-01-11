@@ -15,8 +15,12 @@ func main() {
     // extend globals (available to all view-templates)
     view.Globals["AppName"] = "kern.go demo app"
 
+    infoRouter := app.Router.NewMounted( "/info" )
+    infoRouter.StaticText( "/about",   "this is kern.go" )
+    infoRouter.StaticText( "/version", "0.0.0 - as fresh as they come" )
+
     // block all requests which are not authenticated against "view" permission
-    app.Router.Get("/", login.PermissionReqired( "view" ) )
+    app.Router.All("/", login.PermissionReqired( "view" ) )
 
     // mount index.gohtml on "/"
     app.Router.Get("/", view.NewHandler( "index.gohtml" ) )
