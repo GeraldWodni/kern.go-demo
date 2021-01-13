@@ -20,7 +20,7 @@ func main() {
     infoRouter.StaticText( "/version", "0.0.0 - as fresh as they come" )
 
     // block all requests which are not authenticated against "view" permission
-    app.Router.All("/", login.PermissionReqired( "view" ) )
+    app.Router.Mount( login.PermissionReqired( "/", "view" ) )
 
     // mount index.gohtml on "/"
     app.Router.Get("/", view.NewHandler( "index.gohtml" ) )
