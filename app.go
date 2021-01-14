@@ -24,6 +24,10 @@ func main() {
     app.Router.Mount( logout.Logout("/logout") )
     app.Router.Mount( login.PermissionReqired( "/", "view" ) )
 
+    // add credential checkers
+    login.Register( login.NewEnvironmentCredentialChecker() )
+    login.Register( login.NewStaticCredentials( "tester", "mc testface", "read,write,drink,awesome" ) )
+
     // mount index.gohtml on "/"
     app.Router.Get("/", view.NewHandler( "index.gohtml" ) )
 
