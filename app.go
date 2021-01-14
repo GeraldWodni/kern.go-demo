@@ -5,6 +5,7 @@ package main
 import (
     "boolshit.net/kern"
     "boolshit.net/kern/login"
+    "boolshit.net/kern/logout"
     "boolshit.net/kern/view"
 )
 
@@ -20,6 +21,7 @@ func main() {
     infoRouter.StaticText( "/version", "0.0.0 - as fresh as they come" )
 
     // block all requests which are not authenticated against "view" permission
+    app.Router.Mount( logout.Logout("/logout") )
     app.Router.Mount( login.PermissionReqired( "/", "view" ) )
 
     // mount index.gohtml on "/"
